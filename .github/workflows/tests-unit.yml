@@ -3,7 +3,7 @@ name: Unit tests
 on:
   push:
     branches:
-      - next
+      - vitest-integration
   pull_request:
     types: [opened, synchronize, reopened]
 
