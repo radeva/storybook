@@ -3,7 +3,7 @@ name: Unit tests
 on:
   push:
     branches:
-      - next
+      - vitest-integration
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -15,6 +15,9 @@ jobs:
       matrix:
         os: [windows-latest]
     runs-on: ${{ matrix.os }}
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
@@ -29,3 +32,6 @@ jobs:
         run: yarn task --task compile --start-from=auto
       - name: test
         run: yarn test
+      - name: Fix my build
+        uses: fly-ci/wingman-action@v1
+        if: failure()
